@@ -9,7 +9,7 @@ setup(
     license='MIT',
     keywords='machine learning cli',
     version='0.0.1',
-    py_modules=['cli'],
+    py_modules=['ml_cli'],
     install_requires=[
         'Click',
         'pyfiglet',
