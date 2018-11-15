@@ -1,13 +1,12 @@
 import os
 import click
 import yaml
-import typing as t
 from clint.textui import colored
 from pyfiglet import figlet_format
 
 
 class Config:
-    configuration: t.Optional[t.Dict] = None
+    configuration = None
     CONFIG_FILE = '.ml-cli.yml'
     sudo_prefix = ''
 
