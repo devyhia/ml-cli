@@ -92,7 +92,7 @@ def docker_jupyter(gpu, port):
 
 
 @cli.command()
-def jupyter(gpu, port):
+def jupyter():
     require_configuration()
 
     cmd = command_factory("jupyter-notebook --ip 0.0.0.0 --allow-root")
