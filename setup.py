@@ -8,7 +8,7 @@ setup(
     author_email='yehya.abouelnaga@gmail.com',
     license='MIT',
     keywords='machine learning cli',
-    version='0.2.0',
+    version='0.2.1',
     py_modules=['cli'],
     install_requires=[
         'Click',
