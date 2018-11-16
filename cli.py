@@ -65,12 +65,37 @@ def docker_build():
     os.system(cmd)
 
 
-@cli.command()
+@cli.command(context_settings=dict(
+    ignore_unknown_options=True,
+    allow_extra_args=True,
+))
 @click.option('--gpu/--no-gpu', default=False)
-def docker_bash(gpu):
+@click.pass_context
+def docker_bash(ctx, gpu):
     require_configuration()
 
-    cmd = command_factory("docker run -v `pwd`:/usr/local/src/code {}--rm -it {} bash".format('--runtime=nvidia ' if gpu else '', Config.configuration['repository']))
+    extra_tags = " ".join(ctx.args)
+    cmd = command_factory("docker run -v `pwd`:/usr/local/src/code {}--rm -it {} {} bash".format('--runtime=nvidia ' if gpu else '', extra_tags, Config.configuration['repository']))
+    click.echo(colored.green('$ {}'.format(cmd)))
+    os.system(cmd)
+
+
+@cli.command()
+@click.option('--gpu/--no-gpu', default=False)
+@click.option('--port', default='8888')
+def docker_jupyter(gpu, port):
+    require_configuration()
+
+    cmd = command_factory("docker run -v `pwd`:/usr/local/src/code {}--rm -p {port}:{port} -it {} bash -c 'jupyter-notebook --ip 0.0.0.0 --allow-root'".format('--runtime=nvidia ' if gpu else '', Config.configuration['repository'], port=port))
+    click.echo(colored.green('$ {}'.format(cmd)))
+    os.system(cmd)
+
+
+@cli.command()
+def jupyter(gpu, port):
+    require_configuration()
+
+    cmd = command_factory("jupyter-notebook --ip 0.0.0.0 --allow-root")
     click.echo(colored.green('$ {}'.format(cmd)))
     os.system(cmd)
 
